@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Picross.MainPage"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="#222">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Spacing="25"
+            HorizontalOptions="Center"
+            VerticalOptions="Center">
+            <HorizontalStackLayout
+                HorizontalOptions="Center">
+                <VerticalStackLayout
+                    HorizontalOptions="Center">
+                    <Label
+                        Text="PICROSS"
+                        TextColor="#DDD"
+                        FontFamily="Helvetica"
+                        FontSize="41"
+                        Margin="0,0,0,30"
+                        FontAttributes="Bold"
+                        HorizontalTextAlignment="Center"/>
+                    <Border
+                        BackgroundColor="#333"
+                        Margin="0,0,0,20"
+                        Padding="15,12"
+                        StrokeShape="RoundRectangle 10,10,10,10"
+                        HorizontalOptions="Center"
+                        WidthRequest="185">
+                        <VerticalStackLayout>
+                            <Label
+                                Text="Progress"
+                                TextColor="#DDD"
+                                FontSize="20"
+                                Margin="0,10,0,0"
+                                HorizontalTextAlignment="Center"
+                                FontFamily="Helvitica"
+                                FontAttributes="Bold"/>
+                            <Label
+                                x:Name="progressPercent"
+                                Text="0.0%"
+                                TextColor="#999"
+                                FontSize="25"
+                                Margin="0,10,0,0"
+                                HorizontalTextAlignment="Center"
+                                FontFamily="Helvetica"
+                                FontAttributes="Bold"/>
+                            <BoxView   
+                                Color="#999"  
+                                Margin="0,10,0,0"                   
+                                HeightRequest="1"  
+                                HorizontalOptions="Fill" />
+                            <Label
+                                Text="Mistakes"
+                                TextColor="#DDD"
+                                FontSize="20"
+                                Margin="0,10,0,0"
+                                HorizontalTextAlignment="Center"
+                                FontFamily="Helvitica"
+                                FontAttributes="Bold"/>
+                            <Label
+                                x:Name="mistakesCounter"
+                                Text="0"
+                                TextColor="#999"
+                                FontSize="25"
+                                Margin="0,10,0,0"
+                                HorizontalTextAlignment="Center"
+                                FontFamily="Helvetica"
+                                FontAttributes="Bold"/>
+                            <BoxView   
+                                Color="#999"  
+                                Margin="0,10,0,10"                   
+                                HeightRequest="1"  
+                                HorizontalOptions="Fill" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <Border
+                        BackgroundColor="#333"
+                        Margin="0,0,0,20"
+                        Padding="15,12"
+                        StrokeShape="RoundRectangle 10,10,10,10"
+                        HorizontalOptions="Center"
+                        WidthRequest="185">
+                        <VerticalStackLayout>
+                            <Button
+                                x:Name="newGameButton"
+                                Text="New Game"
+                                TextColor="#000"
+                                FontSize="20"
+                                BackgroundColor="#F0F0F0"
+                                Padding="5, 10"
+                                FontFamily="Arial"
+                                FontAttributes="Bold"/>
+                            <BoxView   
+                                Color="#999"  
+                                Margin="0,10,0,0"                   
+                                HeightRequest="1"  
+                                HorizontalOptions="Fill" />
+                            <Label
+                                Text="Current Seed"
+                                TextColor="#999"
+                                FontSize="15"
+                                Margin="0,10,0,0"
+                                HorizontalTextAlignment="Center"
+                                FontFamily="Helvitica"/>
+                            <Entry
+                                x:Name="currentSeedEntry"
+                                BackgroundColor="#F0F0F0"
+                                TextColor="Black"/>
+                            <Label
+                                Text="Custom Seed"
+                                TextColor="#999"
+                                FontSize="15"
+                                Margin="0,10,0,0"
+                                HorizontalTextAlignment="Center"
+                                FontFamily="Helvitica"/>
+                            <Entry
+                                x:Name="customSeedEntry"
+                                BackgroundColor="#F0F0F0"
+                                TextColor="Black"/>
+                            <Button
+                                x:Name="customGameButton"
+                                Text="Custom Game"
+                                TextColor="#000"
+                                FontSize="18"
+                                BackgroundColor="#F0F0F0"
+                                Margin="0,20,0,0"
+                                Padding="5, 10"
+                                FontFamily="Arial"/>
+                            <BoxView   
+                                Color="#999"  
+                                Margin="0,20,0,10"                   
+                                HeightRequest="1"  
+                                HorizontalOptions="Fill" />
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
