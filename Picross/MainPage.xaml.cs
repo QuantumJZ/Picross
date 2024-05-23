@@ -1,8 +1,13 @@
 ﻿
+using Microsoft.Maui.ApplicationModel.DataTransfer;
+
 namespace Picross
 {
     public partial class MainPage : ContentPage
     {
+        bool isDragging = false;
+        HashSet<Button> buttons = new HashSet<Button>();
+        HashSet<Button> completed = new HashSet<Button>();
         public MainPage()
         {
             InitializeComponent();
@@ -36,24 +41,87 @@ namespace Picross
                     PointerGestureRecognizer pgr = new PointerGestureRecognizer();
                     pgr.PointerEntered += OnPointerEntered;
                     pgr.PointerExited += OnPointerExited;
+                    pgr.PointerPressed += OnDragOver;
+                    pgr.PointerReleased += DragRelease;
                     button.GestureRecognizers.Add(pgr);
+                    button.Clicked += ButtonClicked;
                     gameBoard.Add(button, i, j);
                 }
             }
         }
 
+        // TODO:
+        // Add list of possible row layouts
+        // Start new game by adding 10 rows and setting correct grid
+        // Check if selected squares are labeled correctly
+        // Add incorrect image to put over buttons
+        // Check Game Completed
+        // Add gif for completed correct game
+
+        private void ButtonClicked(object sender, EventArgs e)
+        {
+            if (isDragging)
+            {
+                foreach (Button button in buttons)
+                {
+                    button.BackgroundColor = Color.FromArgb("#FFFFFF");
+                    button.BorderColor = Color.FromArgb("#000000");
+                }
+                buttons.Clear();
+                isDragging = false;
+            }
+            else
+            {
+                Button button = (Button)sender;
+                if (!completed.Contains(button))
+                {
+                    button.BackgroundColor = Color.FromArgb("#DDD");
+                    button.BorderColor = Color.FromArgb("#000");
+                    completed.Add(button);
+                }
+            }
+        }
+
+        private void OnDragOver(object sender, PointerEventArgs e)
+        {
+            isDragging = true;
+            buttons.Add((Button)sender);
+        }
+
+        private void DragRelease(object sender, PointerEventArgs e)
+        {
+            foreach(Button button in buttons)
+            {
+                button.BackgroundColor = Color.FromArgb("#92def7");
+                button.BorderColor = Color.FromArgb("#01A9DB");
+                completed.Add(button);
+            }
+            isDragging = false;
+            buttons.Clear();
+        }
+
         private void OnPointerEntered(object sender, PointerEventArgs e)
         {
-            Button button = (Button)sender;
-            button.BackgroundColor = Color.FromArgb("#F7D358");
-            button.BorderColor = Color.FromArgb("#FF8000");
+            if (!completed.Contains((Button)sender))
+            {
+                Button button = (Button)sender;
+                button.BackgroundColor = Color.FromArgb("#F7D358");
+                button.BorderColor = Color.FromArgb("#FF8000");
+                if (isDragging)
+                {
+                    buttons.Add(button);
+                }
+            }
         }
 
         private void OnPointerExited(object sender, PointerEventArgs e)
         {
-            Button button = (Button)sender;
-            button.BackgroundColor = Color.FromArgb("#FFFFFF");
-            button.BorderColor = Color.FromArgb("#000000");
+            if (!isDragging && !completed.Contains((Button)sender))
+            {
+                Button button = (Button)sender;
+                button.BackgroundColor = Color.FromArgb("#FFFFFF");
+                button.BorderColor = Color.FromArgb("#000000");
+            }
         }
 
         private void GameButtonEntered(object sender, PointerEventArgs e)
