@@ -92,7 +92,8 @@
                                 BackgroundColor="#F0F0F0"
                                 Padding="5, 10"
                                 FontFamily="Arial"
-                                FontAttributes="Bold">
+                                FontAttributes="Bold"
+                                Clicked="resetGrid">
                                 <Button.GestureRecognizers>
                                     <PointerGestureRecognizer PointerEntered="GameButtonEntered"
                                                               PointerExited="GameButtonExited"/>
