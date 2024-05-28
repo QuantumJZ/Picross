@@ -108,10 +108,6 @@ namespace Picross
             }
         }
 
-        // TODO:
-        // Check Game Completed
-        // Add gif for completed correct game
-
         private void resetGrid(object sender, EventArgs e)
         {
             setGrid();
@@ -119,6 +115,7 @@ namespace Picross
             mistakes = 0;
             mistakesCounter.Text = "0";
             progressPercent.Text = "0.0%";
+            gridBackground.IsVisible = false;
             for (int i = 0; i < 10; i++)
             {
                 Label label = rows[i];
@@ -218,19 +215,23 @@ namespace Picross
                     int col = int.Parse(button.StyleId[1].ToString());
                     if (grid[row][col])
                     {
-                        button.Text = "x";
                         button.BackgroundColor = Color.FromArgb("#92def7");
                         button.BorderColor = Color.FromArgb("#01A9DB");
-                        mistakes++;
-                        mistakesCounter.Text = mistakes.ToString();
                     }
                     else
                     {
+                        button.Text = "x";
                         button.BackgroundColor = Color.FromArgb("#DDD");
-                        button.BorderColor = Color.FromArgb("#000");
+                        button.BorderColor = Color.FromArgb("#000");  
+                        mistakes++;
+                        mistakesCounter.Text = mistakes.ToString();
                     }
                     completed.Add(button);
                     progressPercent.Text = (completed.Count()).ToString() + ".0%";
+                    if (completed.Count() == 100)
+                    {
+                        GameCompleted();
+                    }
                 }
             }
         }
@@ -243,25 +244,29 @@ namespace Picross
 
         private void DragRelease(object sender, PointerEventArgs e)
         {
-            foreach(Button button in buttons)
+            foreach (Button button in buttons)
             {
                 int row = int.Parse(button.StyleId[0].ToString());
                 int col = int.Parse(button.StyleId[1].ToString());
                 if (grid[row][col])
                 {
+                    button.Text = "x";
                     button.BackgroundColor = Color.FromArgb("#92def7");
                     button.BorderColor = Color.FromArgb("#01A9DB");
-                }
-                else
-                {
-                    button.Text = "x";
-                    button.BackgroundColor = Color.FromArgb("#DDD");
-                    button.BorderColor = Color.FromArgb("#000");
                     mistakes++;
                     mistakesCounter.Text = mistakes.ToString();
                 }
+                else
+                {
+                    button.BackgroundColor = Color.FromArgb("#DDD");
+                    button.BorderColor = Color.FromArgb("#000");
+                }
                 completed.Add(button);
                 progressPercent.Text = (completed.Count()).ToString() + ".0%";
+                if (completed.Count() == 100)
+                {
+                    GameCompleted();
+                }
             }
             isDragging = false;
             buttons.Clear();
@@ -303,6 +308,23 @@ namespace Picross
             Button button = (Button)sender;
             button.BackgroundColor = Color.FromArgb("#FFFFFF");
             button.BorderColor = Color.FromArgb("#000000");
+        }
+
+        private void GameCompleted()
+        {
+            if (mistakes == 0)
+            {
+                foreach (Button button in completed)
+                {
+                    int row = int.Parse(button.StyleId[0].ToString());
+                    int col = int.Parse(button.StyleId[1].ToString());
+                    if (grid[row][col])
+                    {
+                        button.BackgroundColor = Colors.Transparent;
+                    }
+                }
+                gridBackground.IsVisible = true;
+            }
         }
     }
 }
