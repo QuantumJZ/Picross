@@ -154,6 +154,18 @@
                     HeightRequest="1"  
                     HorizontalOptions="Fill" />
                 <Grid x:Name="gameBoard">
+                    <Image
+                        x:Name="gridBackground"
+                        Source="rainbow.gif"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="FillAndExpand"
+                        Aspect="AspectFill"
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Grid.RowSpan="10"
+                        Grid.ColumnSpan="10"
+                        IsAnimationPlaying="True"
+                        IsVisible="False"/>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="120"/>
                         <RowDefinition Height="70" />
