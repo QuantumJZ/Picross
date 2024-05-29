@@ -4,6 +4,10 @@ namespace Picross
 {
     public partial class MainPage : ContentPage
     {
+        // TODO:
+        // Set up custom seed game
+        // Set random seed game
+
         bool isDragging = false;
         int mistakes = 0;
         HashSet<Button> buttons = new HashSet<Button>();
@@ -12,6 +16,9 @@ namespace Picross
         List<List<bool>> grid = new List<List<bool>>();
         List<Label> rows = new List<Label>();
         List<Label> cols = new List<Label>();
+        /// <summary>
+        /// Initialize game grid and labels
+        /// </summary>
         public MainPage()
         {
             InitializeComponent();
@@ -108,6 +115,11 @@ namespace Picross
             }
         }
 
+        /// <summary>
+        /// Reset all buttons and labels on the grid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void resetGrid(object sender, EventArgs e)
         {
             setGrid();
@@ -180,6 +192,9 @@ namespace Picross
             completed.Clear();
         }
 
+        /// <summary>
+        /// Randomize the grid
+        /// </summary>
         private void setGrid()
         {
             grid.Clear();
@@ -194,6 +209,11 @@ namespace Picross
             }
         }
 
+        /// <summary>
+        /// Handle button click event, reset dragging state if dragging, otherwise check if the button is correct
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ButtonClicked(object sender, EventArgs e)
         {
             if (isDragging)
@@ -216,7 +236,7 @@ namespace Picross
                     if (grid[row][col])
                     {
                         button.BackgroundColor = Color.FromArgb("#92def7");
-                        button.BorderColor = Color.FromArgb("#01A9DB");
+                        button.BorderColor = Color.FromArgb("#000");
                     }
                     else
                     {
@@ -236,12 +256,22 @@ namespace Picross
             }
         }
 
+        /// <summary>
+        /// Add button to dragging list
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnDragOver(object sender, PointerEventArgs e)
         {
             isDragging = true;
             buttons.Add((Button)sender);
         }
 
+        /// <summary>
+        /// Check if each button in dragging list is correct, update mistakes and progress
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DragRelease(object sender, PointerEventArgs e)
         {
             foreach (Button button in buttons)
@@ -272,6 +302,11 @@ namespace Picross
             buttons.Clear();
         }
 
+        /// <summary>
+        /// Highlight button if not completed yet and add to dragging list if dragging
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnPointerEntered(object sender, PointerEventArgs e)
         {
             if (!completed.Contains((Button)sender))
@@ -286,6 +321,11 @@ namespace Picross
             }
         }
 
+        /// <summary>
+        /// Unhighlight button if not completed yet and not dragging
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnPointerExited(object sender, PointerEventArgs e)
         {
             if (!isDragging && !completed.Contains((Button)sender))
@@ -296,6 +336,11 @@ namespace Picross
             }
         }
 
+        /// <summary>
+        /// Highlight new game button when mouse enters
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GameButtonEntered(object sender, PointerEventArgs e)
         {
             Button button = (Button)sender;
@@ -303,6 +348,11 @@ namespace Picross
             button.BorderColor = Color.FromArgb("#01A9DB");
         }
 
+        /// <summary>
+        /// Unhighlight new game button when mouse exits
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GameButtonExited(object sender, PointerEventArgs e)
         {
             Button button = (Button)sender;
@@ -310,6 +360,9 @@ namespace Picross
             button.BorderColor = Color.FromArgb("#000000");
         }
 
+        /// <summary>
+        /// Handle game being completed and show special animation if there are no mistakes
+        /// </summary>
         private void GameCompleted()
         {
             if (mistakes == 0)
