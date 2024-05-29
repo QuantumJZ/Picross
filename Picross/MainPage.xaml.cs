@@ -22,6 +22,9 @@ namespace Picross
         public MainPage()
         {
             InitializeComponent();
+            int seed = rand.Next();
+            currentSeedEntry.Text = seed.ToString();
+            rand = new Random(seed);
             setGrid();
             for (int i = 1; i < 11; i++)
             {
@@ -116,11 +119,33 @@ namespace Picross
         }
 
         /// <summary>
-        /// Reset all buttons and labels on the grid
+        /// Start a need game with a custom random seed
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void resetGrid(object sender, EventArgs e)
+        private void StartCustomGame(object sender, EventArgs e)
+        {
+            int seed;
+            if(int.TryParse(customSeedEntry.Text, out seed))
+            {
+                rand = new Random(seed);
+                currentSeedEntry.Text = seed.ToString();
+                resetGrid();
+            }
+        }
+
+        private void StartNewGame(object sender, EventArgs e)
+        {
+            int seed = rand.Next();
+            currentSeedEntry.Text = seed.ToString();
+            rand = new Random(seed);
+            resetGrid();
+        }
+
+        /// <summary>
+        /// Reset all buttons and labels on the grid
+        /// </summary>
+        private void resetGrid()
         {
             setGrid();
             buttons.Clear();
