@@ -4,10 +4,6 @@ namespace Picross
 {
     public partial class MainPage : ContentPage
     {
-        // TODO:
-        // Set up custom seed game
-        // Set random seed game
-
         bool isDragging = false;
         int mistakes = 0;
         HashSet<Button> buttons = new HashSet<Button>();
@@ -16,6 +12,7 @@ namespace Picross
         List<List<bool>> grid = new List<List<bool>>();
         List<Label> rows = new List<Label>();
         List<Label> cols = new List<Label>();
+
         /// <summary>
         /// Initialize game grid and labels
         /// </summary>
@@ -119,7 +116,7 @@ namespace Picross
         }
 
         /// <summary>
-        /// Start a need game with a custom random seed
+        /// Start a need game with a custom seed
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -134,6 +131,11 @@ namespace Picross
             }
         }
 
+        /// <summary>
+        /// Start a new game with a random seed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void StartNewGame(object sender, EventArgs e)
         {
             int seed = rand.Next();
