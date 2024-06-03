@@ -290,8 +290,11 @@ namespace Picross
         /// <param name="e"></param>
         private void OnDragOver(object sender, PointerEventArgs e)
         {
-            isDragging = true;
-            buttons.Add((Button)sender);
+            if (!completed.Contains((Button)sender))
+            {
+                isDragging = true;
+                buttons.Add((Button)sender);
+            }
         }
 
         /// <summary>
@@ -309,7 +312,7 @@ namespace Picross
                 {
                     button.Text = "x";
                     button.BackgroundColor = Color.FromArgb("#92def7");
-                    button.BorderColor = Color.FromArgb("#01A9DB");
+                    button.BorderColor = Color.FromArgb("#000");
                     mistakes++;
                     mistakesCounter.Text = mistakes.ToString();
                 }
